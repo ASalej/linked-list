@@ -22,14 +22,35 @@ function dll_unittest() {
     lst.insertAt(0, 13);
     lst.insertAt(2, 52);
     
-    var lst_output = [];
+    assert (lst.at(2).data === 52, DontWorkMsg("insertAt"));
+    assert (lst.at(0).data === 13, DontWorkMsg("insertAt"));
     
-    for (var i = 0; i < lst.size(); i++) {
-        lst_output.push(lst.at(i).data);
+    assert (lst.at(0) === lst.head(), DontWorkMsg("head"));
+    assert (lst.at(lst.size() - 1) === lst.tail(), DontWorkMsg("tail"));
+    
+    // indexOf
+    assert (lst.indexOf(13) === 0, DontWorkMsg("indexOf"));
+    assert (lst.indexOf(42) === 1, DontWorkMsg("indexOf"));
+    assert (lst.indexOf(52) === 2, DontWorkMsg("indexOf"));
+    assert (lst.indexOf(24) === 3, DontWorkMsg("indexOf"));
+    
+    
+    // deleteAt
+    lst.deleteAt(0);
+    lst.deleteAt(1);
+    
+    assert (lst.at(0).data === 42, DontWorkMsg("deleteAt"));
+    assert (lst.at(1).data === 24, DontWorkMsg("deleteAt"));
+    
+    // each
+    var fun = function inc(node) {
+      node.data++;
     }
     
-    assert (lst_output === [13, 42, 52, 24], DontWorkMsg("insertAt"));
-    assert (false);
+    lst.each(fun);
+    
+    assert (lst.at(0).data === 43, DontWorkMsg("each"));
+    assert (lst.at(1).data === 25, DontWorkMsg("each"));
     
     alert ("Unit tests passed ^_^");
 }
@@ -125,3 +146,30 @@ function dll_unittest() {
             return null;
         }
    }
+   
+  DoublyLinkedList.prototype.each = function (fun) {
+    // it must work. if data exist it returns i and after -1
+    var node = this._head;
+    var i = 0;
+    while (i < this._length) {
+        fun(node);
+        node = node.next;
+        i++;
+    }
+    
+    return this;
+  }
+  
+  DoublyLinkedList.prototype.indexOf = function (data) {
+    // it must work. if data exist it returns i and after -1
+    var node = this._head;
+    var i = 0;
+    while (i != this.length) {
+        if (node.data == data) {
+            return i;
+        }
+        node = node.next;
+        i++;
+    }
+    return -1;
+  }

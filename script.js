@@ -123,13 +123,29 @@ function dll_unittest() {
 
   }
   
+  DoublyLinkedList.prototype.each = function (fun) {
+    // it must work. if data exist it returns i and after -1
+    var node = this._head;
+    var i = 0;
+    while (i < this._length) {
+        fun(node);
+        node = node.next;
+        i++;
+    }
+    
+    return this;
+  }
+  
   DoublyLinkedList.prototype.indexOf = function (data) {
-      var listData = this.at(node).data;
-      var i = 
-      while(.at(i).data == data)
-      if (== data){
-          return 
-      } else {
-          return -1;
-      }
+    // it must work. if data exist it returns i and after -1
+    var node = this._head;
+    var i = 0;
+    while (i != this.length) {
+        if (node.data == data) {
+            return i;
+        }
+        node = node.next;
+        i++;
+    }
+    return -1;
   }
